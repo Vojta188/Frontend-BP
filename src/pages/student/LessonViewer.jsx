@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { sendAnswerApi, startAttemptApi, nextQuestionApi, finishAttemptApi } from "../../api/endpoints";
 import QuestionCard from "../../components/QuestionCard";
@@ -15,33 +15,35 @@ export default function LessonViewer() {
   const [results, setResults] = useState({ correct: 0, total: 0 });
   const [feedback, setFeedback] = useState(null);
 
-  const loadNext = async () => {
-    const res = await nextQuestionApi(lessonId);
-    setDifficulty(res.difficulty || "easy");
-    if (res.done) {
-      setDone(true);
-      setCurrent(null);
-      await finishAttemptApi(lessonId);
-      return;
+  const loadNext = useCallback(async () => {
+  const res = await nextQuestionApi(lessonId);
+
+  setDifficulty(res.difficulty || "easy");
+
+  if (res.done) {
+    setDone(true);
+    setCurrent(null);
+    await finishAttemptApi(lessonId);
+    return;
+  }
+
+  setCurrent(res.question);
+}, [lessonId]);
+
+useEffect(() => {
+  (async () => {
+    try {
+      setErr("");
+      setDone(false);
+      setFeedback(null);
+      setResults({ correct: 0, total: 0 });
+      await startAttemptApi(lessonId);
+      await loadNext();
+    } catch (e) {
+      setErr(e.message);
     }
-    setCurrent(res.question);
-  };
-
-  useEffect(() => {
-    (async () => {
-      try {
-        setErr("");
-        setDone(false);
-        setFeedback(null);
-        setResults({ correct: 0, total: 0 });
-
-        await startAttemptApi(lessonId);
-        await loadNext();
-      } catch (e) {
-        setErr(e.message);
-      }
-    })();
-  }, [lessonId]);
+  })();
+}, [lessonId, loadNext]);
 
   const answer = async (letter) => {
     if (!current) return;

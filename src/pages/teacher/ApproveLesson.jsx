@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import AssignStudents from "../../components/AssignStudents.jsx";
 import {
@@ -17,23 +17,24 @@ const [openId, setOpenId] = useState(null);
   const [err, setErr] = useState("");
   const [msg, setMsg] = useState("");
 
-  const load = async () => {
-    const d = await getLessonDetailApi(lessonId);
-    setData({
-      lesson: d.lesson,
-      questions: d.questions.map((q) => ({ ...q })), // kopie pro edit
-    });
-  };
+ const load = useCallback(async () => {
+  const d = await getLessonDetailApi(lessonId);
+
+  setData({
+    lesson: d.lesson,
+    questions: d.questions.map((q) => ({ ...q })),
+  });
+}, [lessonId]);
 
   useEffect(() => {
-    (async () => {
-      try {
-        await load();
-      } catch (e) {
-        setErr(e.message);
-      }
-    })();
-  }, [lessonId]);
+  (async () => {
+    try {
+      await load();
+    } catch (e) {
+      setErr(e.message);
+    }
+  })();
+}, [load]);
 
   const saveLesson = async () => {
     setErr(""); setMsg("");
