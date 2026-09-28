@@ -99,8 +99,8 @@ const [openId, setOpenId] = useState(null);
   <div className="card">
     <div className="hstack">
       <div>
-        <div className="sectionTitle">Kontrola + editace lekce</div>
-        <div className="subTitle">Uprav obsah a otázky, potom lekci schval.</div>
+        <div className="sectionTitle">Editace testu</div>
+        <div className="subTitle">Stránka pro úpravu testu</div>
       </div>
       <span className="badge">
         {lesson.approved ? "Schváleno" : "Neschváleno"}
@@ -159,7 +159,7 @@ const [openId, setOpenId] = useState(null);
         <div className="sectionTitle">Otázky</div>
         <div className="subTitle">Klikni na otázku pro rozbalení a úpravu.</div>
       </div>
-      <span className="badge">{questions.length} ks</span>
+      <span className="badge">počet: {questions.length}</span>
     </div>
 
     <div className="vstack">

@@ -35,10 +35,8 @@ export default function LessonStats() {
           </li>
         ))}
       </ul>
-
-      <h3>Leaderboard</h3>
       <table className="table">
-        <thead><tr><th>Student</th><th>Úspěšnost</th><th>Správně/Celkem</th></tr></thead>
+        <thead><tr><th>Úspěšnost studentů</th></tr></thead>
         <tbody>
           {data.leaderboard.map((s) => (
             <tr key={s.studentId}>
