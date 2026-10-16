@@ -99,8 +99,7 @@ const [openId, setOpenId] = useState(null);
   <div className="card">
     <div className="hstack">
       <div>
-        <div className="sectionTitle">Editace testu</div>
-        <div className="subTitle">Stránka pro úpravu testu</div>
+        <div className="sectionTitle">Editace lekce a schválení lekce</div>
       </div>
       <span className="badge">
         {lesson.approved ? "Schváleno" : "Neschváleno"}
@@ -137,7 +136,7 @@ const [openId, setOpenId] = useState(null);
       </div>
 <AssignStudents
   lessonId={lessonId}
-  disabled={data?.lesson?.approved}   // nebo false, pokud chceš i po schválení
+  disabled={data?.lesson?.approved}   
   onSaved={() => {}}
 />
       <div className="btnRow">
@@ -146,10 +145,6 @@ const [openId, setOpenId] = useState(null);
           {lesson.approved ? "Už schváleno" : "Schválit lekci"}
         </button>
       </div>
-
-      {lesson.approved && (
-        <div className="subTitle">Schválená lekce je zamčená (editace je vypnutá).</div>
-      )}
     </div>
   </div>
 
@@ -157,9 +152,8 @@ const [openId, setOpenId] = useState(null);
     <div className="hstack">
       <div>
         <div className="sectionTitle">Otázky</div>
-        <div className="subTitle">Klikni na otázku pro rozbalení a úpravu.</div>
       </div>
-      <span className="badge">počet: {questions.length}</span>
+      <span className="badge">Počet otázek: {questions.length}</span>
     </div>
 
     <div className="vstack">

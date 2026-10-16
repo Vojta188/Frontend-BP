@@ -8,6 +8,7 @@ export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("student");
+  const [inviteCode, setInviteCode] = useState("");
   const [err, setErr] = useState("");
   const [ok, setOk] = useState("");
 
@@ -15,7 +16,7 @@ export default function Register() {
     e.preventDefault();
     setErr(""); setOk("");
     try {
-      await registerApi({ name, email, password, role });
+      await registerApi({ name, email, password, role, inviteCode: role === "teacher" ? inviteCode : undefined });
       setOk("Registrace OK. Teď se přihlas.");
       setTimeout(() => nav("/login"), 600);
     } catch (e) {
@@ -43,6 +44,13 @@ export default function Register() {
           <option value="student">Student</option>
           <option value="teacher">Učitel</option>
         </select>
+
+        {role === "teacher" && (
+          <>
+            <label>Pozvánkový kód učitele</label>
+            <input type="password" value={inviteCode} onChange={(e) => setInviteCode(e.target.value)} />
+          </>
+        )}
 
         <button>Registrovat</button>
       </form>

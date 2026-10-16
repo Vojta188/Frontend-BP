@@ -36,7 +36,6 @@ export default function LessonRepeatManager({ lessonId }) {
         setErr(e.message);
       }
     })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lessonId]);
 
   const toggle = (sid) => {
@@ -56,14 +55,13 @@ export default function LessonRepeatManager({ lessonId }) {
   };
 
   const canRepeatIds = useMemo(() => {
-    // smysl má resetovat hlavně "splněno"
     return rows.filter(r => r.status === "splneno").map(r => r.student_id);
   }, [rows]);
 
   const povolitOpakovani = async () => {
     setErr(""); setMsg("");
     const ids = Array.from(selected);
-    if (ids.length === 0) return setErr("Nejdřív vyber žáky.");
+    if (ids.length === 0) return setErr("Nejdřív vyber studenty.");
 
     try {
       await allowRepeatBatchApi(lessonId, ids);
@@ -100,7 +98,7 @@ export default function LessonRepeatManager({ lessonId }) {
   const pridatZaky = async () => {
     setErr(""); setMsg("");
     const ids = Array.from(addSelected);
-    if (ids.length === 0) return setErr("Vyber žáky k přidání.");
+    if (ids.length === 0) return setErr("Vyber studenty k přidání.");
 
     try {
       await addStudentsToLessonApi(lessonId, ids);
@@ -117,9 +115,8 @@ export default function LessonRepeatManager({ lessonId }) {
       <div className="hstack">
         <div>
           <div className="sectionTitle">Opakování lekce</div>
-          <div className="subTitle">Správa splnění a možnost opakování pro vybrané žáky.</div>
         </div>
-        <span className="badge">Žáků: {rows.length}</span>
+        <span className="badge">Studentů: {rows.length}</span>
       </div>
 
       {err && <div className="alert error">{err}</div>}
@@ -138,16 +135,16 @@ export default function LessonRepeatManager({ lessonId }) {
       <div style={{ marginTop: 12, maxHeight: 280, overflow: "auto" }}>
         {rows.map(r => (
           <div key={r.student_id} className="qItem" style={{ marginBottom: 8 }}>
-            <label style={{ display: "flex", gap: 10, alignItems: "center", margin: 0 }}>
+            <label className="studentCheckRow">
+              <span className="studentCheckName">
+                <strong>{r.name}</strong>
+                <span className="muted">{r.email}</span>
+              </span>
               <input
                 type="checkbox"
                 checked={selected.has(r.student_id)}
                 onChange={() => toggle(r.student_id)}
               />
-              <div style={{ flex: 1 }}>
-                <div style={{ fontWeight: 800 }}>{r.name}</div>
-                <div className="muted">{r.email}</div>
-              </div>
               <span className="badge">
                 {r.status === "splneno" ? "Splněno" : r.status === "rozpracovano" ? "Rozpracováno" : "Nezačato"}
               </span>
@@ -165,12 +162,11 @@ export default function LessonRepeatManager({ lessonId }) {
 
       <div className="hr" />
 
-      <div className="sectionTitle" style={{ marginBottom: 6 }}>Přidat žáky k lekci</div>
-      <div className="subTitle">Umožní použít starou lekci z databáze i pro nové žáky.</div>
+      <div className="sectionTitle" style={{ marginBottom: 6 }}>Přidat studenty k lekci</div>
 
       <div className="grid2">
         <div>
-          <label>Hledat žáka</label>
+          <label>Hledat studenta</label>
           <input value={query} onChange={(e) => search(e.target.value)} placeholder="jméno / email" />
         </div>
         <div className="btnRow" style={{ alignSelf: "end" }}>
@@ -181,16 +177,17 @@ export default function LessonRepeatManager({ lessonId }) {
       <div style={{ marginTop: 10, maxHeight: 240, overflow: "auto" }}>
         {allStudents.map(s => (
           <div key={s.id} className="qItem" style={{ marginBottom: 8 }}>
-            <label style={{ display: "flex", gap: 10, alignItems: "center", margin: 0 }}>
+            <label className="studentCheckRow">
+              <span className="studentCheckName">
+                <strong>{s.name}</strong>
+                <span className="muted">{s.email}</span>
+              </span>
               <input
                 type="checkbox"
                 checked={addSelected.has(s.id)}
                 onChange={() => toggleAdd(s.id)}
               />
-              <div>
-                <div style={{ fontWeight: 800 }}>{s.name}</div>
-                <div className="muted">{s.email}</div>
-              </div>
+              <span aria-hidden="true" />
             </label>
           </div>
         ))}

@@ -21,7 +21,7 @@ export default function LessonStats() {
 
   return (
     <div className="card">
-      <h2>Statistiky lekce</h2>
+      <h2>Statistiky</h2>
       <div><b>{data.lesson.title}</b></div>
       <div>Odpovědi: <b>{data.totalAnswers}</b></div>
       <div>Úspěšnost: <b>{data.successRate}%</b></div>
@@ -35,8 +35,10 @@ export default function LessonStats() {
           </li>
         ))}
       </ul>
+
+      <h3>Leaderboard</h3>
       <table className="table">
-        <thead><tr><th>Úspěšnost studentů</th></tr></thead>
+        <thead><tr><th>Student</th><th>Úspěšnost</th><th>Správně/Celkem</th></tr></thead>
         <tbody>
           {data.leaderboard.map((s) => (
             <tr key={s.studentId}>

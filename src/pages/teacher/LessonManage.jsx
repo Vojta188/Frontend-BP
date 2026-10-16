@@ -11,7 +11,7 @@ export default function LessonManage() {
         <div className="hstack">
           <div>
             <div className="sectionTitle">Správa žáků – lekce {lessonId}</div>
-            <div className="subTitle">Přidávání žáků a povolení opakování</div>
+            <div className="subTitle">Přidávání žáků</div>
           </div>
           <Link className="btn" to="/ucitel">Zpět</Link>
         </div>

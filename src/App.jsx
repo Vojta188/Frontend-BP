@@ -67,7 +67,9 @@ export default function App() {
             }
           />
 
-          <Route path="/ucitel/lekce/:lessonId/sprava" element={<LessonManage />} />
+          <Route path="/ucitel/lekce/:lessonId/sprava" element={
+            <ProtectedRoute roles={["teacher", "admin"]}><LessonManage /></ProtectedRoute>
+          } />
 
           {/* STUDENT */}
           <Route

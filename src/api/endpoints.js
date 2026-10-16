@@ -1,24 +1,19 @@
 import { apiFetch } from "./client";
 
-// AUTH
 export const loginApi = (payload) => apiFetch("/api/auth/login", { method: "POST", body: payload, auth: false });
 export const registerApi = (payload) => apiFetch("/api/auth/registrace", { method: "POST", body: payload, auth: false });
 
-// LEKCE
 export const getLessonsApi = () => apiFetch("/api/lekce");
 export const createLessonApi = (payload) => apiFetch("/api/lekce/vytvor", { method: "POST", body: payload });
 export const approveLessonApi = (lessonId) => apiFetch(`/api/lekce/schval/${lessonId}`, { method: "POST" });
 
-// OTÁZKY + ODPOVĚDI
 export const getQuestionsApi = (lessonId) => apiFetch(`/api/otazky/${lessonId}`);
 export const sendAnswerApi = (payload) => apiFetch("/api/odpoved", { method: "POST", body: payload });
 
-// STATISTIKY (učitel)
 export const teacherOverviewApi = () => apiFetch("/api/statistiky/ucitel/prehled");
 export const teacherLessonStatsApi = (lessonId) => apiFetch(`/api/statistiky/ucitel/lekce/${lessonId}`);
 export const teacherStudentStatsApi = (studentId) => apiFetch(`/api/statistiky/ucitel/student/${studentId}`);
 
-// STATISTIKY (student – pokud je máš)
 export const studentStatsApi = () => apiFetch("/api/statistiky/student");
 export const getLessonDetailApi = (lessonId) => apiFetch(`/api/lekce/${lessonId}/detail`);
 

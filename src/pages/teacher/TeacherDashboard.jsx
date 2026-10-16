@@ -44,6 +44,7 @@ export default function TeacherDashboard() {
       <div className="card tdash-hero">
         <div>
           <h2>Učitel</h2>
+          
         </div>
         <div className="tdash-cta">
           <Link className="linkBtn" to="/ucitel/vytvorit">+ Vytvořit lekci</Link>
@@ -64,7 +65,6 @@ export default function TeacherDashboard() {
           <div className="statCard">
             <div className="statLabel">Úspěšnost</div>
             <div className="statValue">{overview.successRate}%</div>
-            <div className="statHint">Podíl správných odpovědí.</div>
           </div>
 
           <div className="statCard">
@@ -79,16 +79,16 @@ export default function TeacherDashboard() {
           <div>
             <div className="sectionTitle">Moje lekce</div>
           </div>
-          <span className="badge">počet: {lessons.length}</span>
+          <span className="badge">{lessons.length}</span>
         </div>
 
         <div className="tableWrap" style={{ marginTop: 10 }}>
           <table className="tableModern">
             <thead>
               <tr>
-                <th>Název testu</th>
-                <th>Schválení testu</th>
-                <th>Možnosti</th>
+                <th>Název</th>
+                <th>Schváleno</th>
+                <th>Akce</th>
               </tr>
             </thead>
             <tbody>

@@ -29,7 +29,7 @@ export default function AssignStudents({ lessonId, disabled, onSaved }) {
 
   useEffect(() => {
     if (lessonId) load();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    
   }, [lessonId]);
 
   const search = async (value) => {
@@ -77,7 +77,7 @@ export default function AssignStudents({ lessonId, disabled, onSaved }) {
 
       <div className="grid2">
         <div>
-          <label>Hledat (jméno nebo email)</label>
+          <label>Hledat Podle jména nebo emailu</label>
           <input
             value={query}
             onChange={(e) => search(e.target.value)}
@@ -102,31 +102,26 @@ export default function AssignStudents({ lessonId, disabled, onSaved }) {
         )}
 
         {students.map((s) => {
-          const checked = selected.has(s.id);
+               const checked = selected.has(s.id);
           return (
             <div key={s.id} className="qItem" style={{ marginBottom: 8 }}>
-              <label style={{ display: "flex", gap: 10, alignItems: "center", margin: 0 }}>
+              <label className="studentCheckRow">
+                <span className="studentCheckName">
+                  <strong>{s.name}</strong>
+                  <span className="muted">{s.email}</span>
+                </span>
                 <input
                   type="checkbox"
                   checked={checked}
                   onChange={() => toggle(s.id)}
                   disabled={disabled}
                 />
-                <div>
-                  <div style={{ fontWeight: 800 }}>{s.name}</div>
-                  <div className="muted">{s.email}</div>
-                </div>
+                <span aria-hidden="true" />
               </label>
             </div>
           );
         })}
       </div>
-
-      {disabled && (
-        <div className="subTitle" style={{ marginTop: 10 }}>
-          Tato část je teď zamčená (lekce je schválená). Pokud chceš, aby šlo přiřazovat i po schválení, řekni a upravím to.
-        </div>
-      )}
     </div>
   );
 }

@@ -21,7 +21,6 @@ export default function StudentDashboard() {
     <div className="studentHome">
       <div className="studentHero card">
         <h2>Moje lekce</h2>
-        <div className="muted">Uvidíš jen lekce, které ti učitel přiřadil.</div>
         {err && <div className="error" style={{ marginTop: 10 }}>{err}</div>}
       </div>
 
