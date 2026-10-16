@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import {
   lessonStudentsOverviewApi,
   allowRepeatBatchApi,
@@ -18,12 +18,12 @@ export default function LessonRepeatManager({ lessonId }) {
   const [allStudents, setAllStudents] = useState([]);
   const [addSelected, setAddSelected] = useState(new Set());
 
-  const load = async () => {
+  const load = useCallback(async () => {
     setErr(""); setMsg("");
     const r = await lessonStudentsOverviewApi(lessonId);
     setRows(r || []);
     setSelected(new Set());
-  };
+  }, [lessonId]);
 
   useEffect(() => {
     if (!lessonId) return;
@@ -36,7 +36,7 @@ export default function LessonRepeatManager({ lessonId }) {
         setErr(e.message);
       }
     })();
-  }, [lessonId]);
+  }, [lessonId,load]);
 
   const toggle = (sid) => {
     setSelected(prev => {

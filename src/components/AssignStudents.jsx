@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { teacherStudentsApi, getLessonAssignApi, saveLessonAssignApi } from "../api/endpoints";
 
 export default function AssignStudents({ lessonId, disabled, onSaved }) {
@@ -10,7 +10,7 @@ export default function AssignStudents({ lessonId, disabled, onSaved }) {
   const [selected, setSelected] = useState(new Set());
   const [loading, setLoading] = useState(false);
 
-  const load = async () => {
+  const load = useCallback(async () => {
     setErr(""); setMsg("");
     setLoading(true);
     try {
@@ -25,12 +25,12 @@ export default function AssignStudents({ lessonId, disabled, onSaved }) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [lessonId]);
 
   useEffect(() => {
     if (lessonId) load();
     
-  }, [lessonId]);
+  }, [lessonId,load]);
 
   const search = async (value) => {
     setQuery(value);
