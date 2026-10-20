@@ -170,7 +170,6 @@ const [openId, setOpenId] = useState(null);
               <div>
                 <h4>{i + 1}. {q.question || "(bez textu)"}</h4>
                 <div className="qMeta">
-                  <span>ID: {q.id}</span>
                   <span>•</span>
                   <span>Obtížnost: {q.difficulty}</span>
                   <span>•</span>
